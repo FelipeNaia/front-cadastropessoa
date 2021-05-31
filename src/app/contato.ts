@@ -1,6 +1,6 @@
-export interface Pessoa {
+export interface Contato {
   id: number;
   nome: string;
-  cpf: string;
-  nascimento: string;
+  numero: string;
+  email: string;
 }

@@ -1,0 +1,6 @@
+<h2>Lista de pessoas cadastradas: </h2>
+<ul class="heroes">
+  <li *ngFor="let pessoa of pessoas">
+    <app-pessoa-item [pessoa]="pessoa"></app-pessoa-item>
+  </li>
+</ul>
