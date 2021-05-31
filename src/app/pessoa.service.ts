@@ -5,13 +5,14 @@ import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {PessoaResponse} from "./pessoaResponse";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PessoaService {
 
-  private pessoaUrl = "/pessoa";
+  private pessoaUrl = "/api/pessoa/lista?page=0&size=99";
 
   private log(message: string) {
     this.messageService.add(`HeroService: ${message}`);
@@ -31,10 +32,10 @@ export class PessoaService {
     };
   }
 
-  getPessoas() : Observable<Pessoa[]> {
-    return this.http.get<Pessoa[]>(this.pessoaUrl)
+  getPessoas() : Observable<PessoaResponse> {
+    return this.http.get<PessoaResponse>(this.pessoaUrl)
       .pipe(
-        catchError(this.handleError<Pessoa[]>('getHeroes', []))
+        catchError(this.handleError<PessoaResponse>('getPessoas'))
       );
   }
 

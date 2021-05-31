@@ -15,7 +15,7 @@ export class PessoaListaComponent implements OnInit {
 
   getPessoas() : void {
     this.pessoaService.getPessoas()
-      .subscribe(pessoas => this.pessoas = pessoas)
+      .subscribe(pessoas => this.pessoas = pessoas.content)
   }
 
   constructor(private pessoaService : PessoaService) { }
