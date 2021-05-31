@@ -11,10 +11,11 @@ import {Observable} from "rxjs";
 })
 export class PessoaListaComponent implements OnInit {
 
-  pessoas : Observable<Pessoa[]> = [];
+  pessoas : Pessoa[] = [];
 
   getPessoas() : void {
-    this.pessoas = this.pessoaService.getPessoas()
+    this.pessoaService.getPessoas()
+      .subscribe(pessoas => this.pessoas = pessoas)
   }
 
   constructor(private pessoaService : PessoaService) { }
