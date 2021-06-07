@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import {Pessoa} from "./pessoa";
-import {PESSOAS} from "./mock-pessoas";
 import { MessageService } from './message.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import {Observable, ObservableInput, of, throwError} from "rxjs";
+import {Observable, of} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {PessoaResponse} from "./pessoaResponse";
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -23,7 +23,13 @@ export class PessoaService {
   private deleteUrl = this.baseUrl + "/";
 
   private log(message: string) {
-    this.messageService.add(`PessoaService: ${message}`);
+    // this.messageService.add(`PessoaService: ${message}`);
+    this._snackBar.open(message, "OK",
+      {
+        horizontalPosition: "right",
+        verticalPosition: "top",
+        duration: 5000
+      })
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -52,5 +58,5 @@ export class PessoaService {
     );
   }
 
-  constructor(private messageService: MessageService, private http: HttpClient) { }
+  constructor(private messageService: MessageService, private http: HttpClient, private _snackBar: MatSnackBar) { }
 }

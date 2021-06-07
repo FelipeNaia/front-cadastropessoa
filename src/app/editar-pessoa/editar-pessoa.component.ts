@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter} from '@angular/core';
 import {PessoaService} from "../pessoa.service";
 import {Pessoa} from "../pessoa";
 import {Contato} from "../contato";
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-editar-pessoa',
@@ -10,6 +11,7 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./editar-pessoa.component.css']
 })
 export class EditarPessoaComponent implements OnInit {
+  @Output() updateList = new EventEmitter();
   faPlusCircle = faPlusCircle;
   startDate = new Date(2000, 0, 1);
 
@@ -20,7 +22,7 @@ export class EditarPessoaComponent implements OnInit {
 
   contatos: Contato[] = [];
 
-  constructor(private pessoaService : PessoaService) { }
+  constructor(private pessoaService : PessoaService, private _snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
   }
@@ -42,7 +44,18 @@ export class EditarPessoaComponent implements OnInit {
       cpf: this.cpf,
       nascimento: this.nascimento ? new Date(this.nascimento).toISOString().replace("Z", "") : "",
       contatos: this.contatos
-    })).subscribe()
+    })).subscribe((x:any)=>{
+      if(x) {
+        this.updateList.emit();
+        this.pessoaService.getPessoas();
+        this._snackBar.open("Pessoa Salva com sucesso", "IHA!",
+          {
+            horizontalPosition: "right",
+            verticalPosition: "top",
+            duration: 5000
+          })
+      }
+    })
 
 
     // console.log(this.nome, this.cpf, this.nascimento);

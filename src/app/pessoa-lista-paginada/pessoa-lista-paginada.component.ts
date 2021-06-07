@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Pessoa} from "../pessoa";
 import {PessoaService} from "../pessoa.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -9,7 +9,9 @@ import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
   templateUrl: './pessoa-lista-paginada.component.html',
   styleUrls: ['./pessoa-lista-paginada.component.css']
 })
+
 export class PessoaListaPaginadaComponent implements OnInit {
+  @Input() updateEvent? : Event;
   faTrash = faTrash;
   faPencilAlt = faPencilAlt;
   displayedColumns: string[] = ['nome', 'cpf', 'nascimento', 'actions'];

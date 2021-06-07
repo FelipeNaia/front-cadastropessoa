@@ -27,6 +27,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import { MatNativeDateModule } from '@angular/material/core';
 import { EditarContatoComponent } from './editar-contato/editar-contato.component';
 import {MatDividerModule} from "@angular/material/divider";
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 registerLocaleData(localePt);
 
@@ -60,6 +61,7 @@ registerLocaleData(localePt);
     MatDatepickerModule,
     MatNativeDateModule,
     MatDividerModule,
+    MatSnackBarModule,
   ],
   providers: [ { provide: LOCALE_ID, useValue: "pt-BR" }],
   bootstrap: [AppComponent]

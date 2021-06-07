@@ -2,7 +2,8 @@ table {
   width: 100%;
 }
 mat-card {
-  width: 120%;
+  width: 800px;
+  margin: 20px 20px 20px 40px;
 }
 
 .mat-column-nome, .mat-column-cpf, .mat-column-nascimento{
