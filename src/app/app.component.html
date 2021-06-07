@@ -1,3 +1,16 @@
 <h1>{{title}}</h1>
-<app-pessoa-lista></app-pessoa-lista>
-<app-messages></app-messages>
+<mat-grid-list cols="10" rowHeight="fit" style="height: 100%;" >
+  <mat-grid-tile [colspan]="5" >
+    <app-pessoa-lista-paginada></app-pessoa-lista-paginada>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="3">
+    <app-editar-pessoa></app-editar-pessoa>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2">
+    <app-messages></app-messages>
+  </mat-grid-tile>
+
+</mat-grid-list>
+<!--<app-pessoa-lista-paginada></app-pessoa-lista-paginada>-->

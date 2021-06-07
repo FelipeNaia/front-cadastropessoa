@@ -1,0 +1,16 @@
+table {
+  width: 100%;
+}
+mat-card {
+  width: 120%;
+}
+
+.mat-column-nome, .mat-column-cpf, .mat-column-nascimento{
+  border-right: 1px solid lightgray;
+  text-align: center;
+}
+
+.mat-column-actions {
+  text-align: center;
+  width: 100px;
+}

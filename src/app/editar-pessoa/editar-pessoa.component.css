@@ -1,0 +1,14 @@
+mat-card {
+  width: 500px;
+
+  flex-wrap: nowrap;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.contato {
+  width: 93%;
+  margin-bottom: 5px;
+}

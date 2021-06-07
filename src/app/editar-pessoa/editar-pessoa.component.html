@@ -1,0 +1,59 @@
+<mat-card class="mat-elevation-z8">
+  <form class="add-form" (ngSubmit)="onSubmit()">
+  <h3>Editar Pessoa</h3>
+
+  <mat-form-field class="full-width">
+    <mat-label>Nome</mat-label>
+    <label>
+      <input matInput placeholder="nome" name="nome" [(ngModel)]="nome">
+    </label>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>CPF</mat-label>
+    <label>
+      <input matInput placeholder="CPF" name="cpf" [(ngModel)]="cpf">
+    </label>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Nascimento</mat-label>
+    <label>
+      <input matInput [matDatepicker]="picker" name="nascimento" [(ngModel)]="nascimento">
+    </label>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
+  </mat-form-field>
+
+    <mat-card class="mat-elevation-z1 contato" *ngFor='let contato of contatos'>
+      <mat-form-field class="full-width">
+        <mat-label>Nome</mat-label>
+        <label>
+          <input matInput placeholder="Nome" name="nome" [(ngModel)]="contato.nome">
+        </label>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>Telefone</mat-label>
+        <label>
+          <input matInput placeholder="Telefone" name="telefone" [(ngModel)]="contato.telefone">
+        </label>
+      </mat-form-field>
+
+      <mat-form-field class="full-width">
+        <mat-label>E-mail</mat-label>
+        <label>
+          <input matInput placeholder="CPF" name="E-mail" [(ngModel)]="contato.email">
+        </label>
+      </mat-form-field>
+    </mat-card>
+
+    <button class="action-button" mat-raised-button color="accent" (click)="addContato($event)"
+            matTooltip="Adicionar contato" matTooltipPosition="right">
+      <fa-icon [icon]="faPlusCircle"></fa-icon> Adicionar Contato
+    </button>
+
+
+  <button type="submit" mat-raised-button>Salvar Pessoa</button>
+  </form>
+</mat-card>
