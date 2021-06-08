@@ -18,9 +18,8 @@ const httpOptions = {
 })
 export class PessoaService {
 
-  private pessoaUrl = "/api/pessoa/lista?page=0&size=99";
+  private pessoaList = "/api/pessoa/lista?page=0&size=99";
   private baseUrl = "/api/pessoa/";
-  private deleteUrl = this.baseUrl + "/";
 
   private log(message: string) {
     // this.messageService.add(`PessoaService: ${message}`);
@@ -41,15 +40,22 @@ export class PessoaService {
   }
 
   getPessoas() : Observable<PessoaResponse> {
-    return this.http.get<PessoaResponse>(this.pessoaUrl)
+    return this.http.get<PessoaResponse>(this.pessoaList)
       .pipe(
         catchError(this.handleError<PessoaResponse>('getPessoas'))
       );
   }
 
+  getPessoa(pessoaId : number) : Observable<Pessoa> {
+    return this.http.get<Pessoa>(this.baseUrl + pessoaId)
+      .pipe(
+        catchError(this.handleError<Pessoa>('getPessoa'))
+      );
+  }
+
   deletePessoa(pessoa : Pessoa) : Observable<void> {
-    console.log(this.deleteUrl + pessoa.id);
-    return this.http.delete<void>(this.deleteUrl + pessoa.id);
+    console.log(this.baseUrl + pessoa.id);
+    return this.http.delete<void>(this.baseUrl + pessoa.id);
   }
 
   putPessoa(pessoa : Pessoa) : any {

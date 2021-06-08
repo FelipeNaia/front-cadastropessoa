@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Pessoa} from "../pessoa";
 import {PessoaService} from "../pessoa.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -13,6 +13,7 @@ import {Observable, Subscription} from "rxjs";
 
 export class PessoaListaPaginadaComponent implements OnInit {
   @Input() events: Observable<void> = new Observable();
+  @Output() editPessoa = new EventEmitter<number>();
   private eventsSubscription : Subscription = new Subscription();
 
   faTrash = faTrash;
@@ -44,7 +45,7 @@ export class PessoaListaPaginadaComponent implements OnInit {
   }
 
   onEdit(pessoa: Pessoa) {
-    console.log("deletando " + pessoa.nome);
-    this.pessoaService.deletePessoa(pessoa).subscribe(() => this.getPessoas());
+    console.log("editando " + pessoa.nome);
+    this.editPessoa.emit(pessoa.id);
   }
 }

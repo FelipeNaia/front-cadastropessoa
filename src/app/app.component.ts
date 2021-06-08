@@ -10,12 +10,13 @@ export class AppComponent {
   title = 'Cadastro de pessoa';
 
   eventsSubject: Subject<void> = new Subject<void>();
+  eventsEditPessoa: Subject<number> = new Subject<number>();
 
   updateList() {
     this.eventsSubject.next();
   }
 
-  editPessoa() {
-    this.eventsSubject.next();
+  editPessoa(pessoaId : number) {
+    this.eventsEditPessoa.next(pessoaId);
   }
 }

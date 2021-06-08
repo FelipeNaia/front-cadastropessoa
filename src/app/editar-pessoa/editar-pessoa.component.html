@@ -1,31 +1,30 @@
 <mat-card class="mat-elevation-z8 parent">
-  <form class="add-form" (ngSubmit)="onSubmit()">
   <h3>Editar Pessoa</h3>
 
   <mat-form-field class="full-width">
     <mat-label>Nome</mat-label>
     <label>
-      <input matInput placeholder="nome" name="nome" [(ngModel)]="nome">
+      <input matInput placeholder="nome" name="nome" [(ngModel)]="pessoa.nome">
     </label>
   </mat-form-field>
 
   <mat-form-field class="full-width">
     <mat-label>CPF</mat-label>
     <label>
-      <input matInput placeholder="CPF" name="cpf" [(ngModel)]="cpf">
+      <input matInput placeholder="CPF" name="cpf" [(ngModel)]="pessoa.cpf">
     </label>
   </mat-form-field>
 
-  <mat-form-field class="full-width">
+  <mat-form-field class="full-width" appearance="fill" >
     <mat-label>Nascimento</mat-label>
     <label>
-      <input matInput [matDatepicker]="picker" name="nascimento" [(ngModel)]="nascimento">
+      <input matInput [matDatepicker]="picker" name="nascimento" [formControl]="dateFormControl"  >
     </label>
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
+    <mat-datepicker disabled="false" #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
   </mat-form-field>
 
-    <mat-card class="mat-elevation-z1 contato" *ngFor='let contato of contatos'>
+    <mat-card class="mat-elevation-z1 contato" *ngFor='let contato of pessoa.contatos'>
       <mat-form-field class="full-width">
         <mat-label>Nome</mat-label>
         <label>
@@ -43,7 +42,7 @@
       <mat-form-field class="full-width">
         <mat-label>E-mail</mat-label>
         <label>
-          <input matInput placeholder="CPF" name="E-mail" [(ngModel)]="contato.email">
+          <input matInput placeholder="E-mail" name="E-mail" [(ngModel)]="contato.email">
         </label>
       </mat-form-field>
     </mat-card>
@@ -52,7 +51,5 @@
             matTooltip="Adicionar contato" matTooltipPosition="right">
       <fa-icon [icon]="faPlusCircle"></fa-icon> Adicionar Contato
     </button>
-
-  <button type="submit" mat-raised-button>Salvar Pessoa</button>
-  </form>
+  <button type="submit" (click)="onSubmit()" mat-raised-button>Salvar Pessoa</button>
 </mat-card>

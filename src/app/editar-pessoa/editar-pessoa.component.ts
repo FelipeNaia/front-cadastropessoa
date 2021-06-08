@@ -1,9 +1,11 @@
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input} from '@angular/core';
 import {PessoaService} from "../pessoa.service";
 import {Pessoa} from "../pessoa";
 import {Contato} from "../contato";
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {Observable, Subscription} from "rxjs";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-editar-pessoa',
@@ -12,24 +14,40 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class EditarPessoaComponent implements OnInit {
   @Output() updateList = new EventEmitter();
+  @Input() events: Observable<number> = new Observable();
+  private eventsSubscription : Subscription = new Subscription();
+
   faPlusCircle = faPlusCircle;
   startDate = new Date(2000, 0, 1);
+  dateFormControl : FormControl = new FormControl({value: '', disabled: true});
 
-  id?: number;
-  nome: string = '';
-  cpf: string = '';
-  nascimento: string = '';
+  pessoa : Pessoa;
 
-  contatos: Contato[] = [];
+  constructor(private pessoaService : PessoaService, private _snackBar: MatSnackBar) {
+    this.pessoa = EditarPessoaComponent.getEmptyPerson();
+  }
 
-  constructor(private pessoaService : PessoaService, private _snackBar: MatSnackBar) { }
+  static getEmptyPerson(): Pessoa {
+    return <Pessoa>({
+      nome: '',
+      cpf: '',
+      nascimento: '',
+      contatos: []
+    })
+  }
 
   ngOnInit(): void {
+    this.eventsSubscription = this.events.subscribe((pessoaId: number) => this.pessoaService.getPessoa(pessoaId).subscribe(
+      (pessoa) => {
+        this.pessoa = pessoa;
+        this.dateFormControl.setValue(new Date(pessoa.nascimento));
+      }
+    ));
   }
 
   addContato(e : Event) {
     e.preventDefault();
-    this.contatos.push(<Contato> ({
+    this.pessoa.contatos.push(<Contato> ({
       nome: '',
       telefone: '',
       email: '',
@@ -37,16 +55,12 @@ export class EditarPessoaComponent implements OnInit {
   }
 
   onSubmit() {
-    this.pessoaService.putPessoa(<Pessoa>({
-      id: this.id,
-      nome: this.nome,
-      cpf: this.cpf,
-      nascimento: this.nascimento ? new Date(this.nascimento).toISOString().replace("Z", "") : "",
-      contatos: this.contatos
-    })).subscribe((x:any)=>{
+    this.pessoa.nascimento = this.dateFormControl.value ? this.dateFormControl.value.toISOString().replace("Z", "") : "";
+    this.pessoaService.putPessoa(this.pessoa).subscribe((x:any)=>{
       if(x) {
         this.updateList.emit();
-        this.pessoaService.getPessoas();
+        this.pessoa = EditarPessoaComponent.getEmptyPerson();
+        this.dateFormControl.setValue(null);
         this._snackBar.open("Pessoa Salva com sucesso", "IHA!",
           {
             horizontalPosition: "right",
@@ -55,10 +69,6 @@ export class EditarPessoaComponent implements OnInit {
           })
       }
     })
-
-
-    // console.log(this.nome, this.cpf, this.nascimento);
-    // console.log(new Date(this.nascimento).toISOString())
   }
 
 }
