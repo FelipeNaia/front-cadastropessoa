@@ -2,11 +2,11 @@
 <div class="container">
   <!--<mat-grid-list cols="10" rowHeight="fit" style="height: 100%;" >-->
   <!--  <mat-grid-tile [colspan]="5" >-->
-  <app-pessoa-lista-paginada></app-pessoa-lista-paginada>
+  <app-pessoa-lista-paginada [events]="eventsSubject.asObservable()"></app-pessoa-lista-paginada>
   <!--  </mat-grid-tile>-->
 
   <!--  <mat-grid-tile [colspan]="3">-->
-  <app-editar-pessoa (event)="updateList"></app-editar-pessoa>
+  <app-editar-pessoa (updateList)="updateList()"></app-editar-pessoa>
   <!--  </mat-grid-tile>-->
 
   <!--  <mat-grid-tile [colspan]="2">-->

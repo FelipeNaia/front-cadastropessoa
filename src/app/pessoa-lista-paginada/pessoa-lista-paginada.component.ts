@@ -3,6 +3,7 @@ import {Pessoa} from "../pessoa";
 import {PessoaService} from "../pessoa.service";
 import {MatTableDataSource} from "@angular/material/table";
 import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-pessoa-lista-paginada',
@@ -11,7 +12,9 @@ import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 })
 
 export class PessoaListaPaginadaComponent implements OnInit {
-  @Input() updateEvent? : Event;
+  @Input() events: Observable<void> = new Observable();
+  private eventsSubscription : Subscription = new Subscription();
+
   faTrash = faTrash;
   faPencilAlt = faPencilAlt;
   displayedColumns: string[] = ['nome', 'cpf', 'nascimento', 'actions'];
@@ -23,10 +26,16 @@ export class PessoaListaPaginadaComponent implements OnInit {
       });
   }
 
-  constructor(private pessoaService : PessoaService) { }
+  constructor(private pessoaService : PessoaService) {
+  }
 
   ngOnInit(): void {
     this.getPessoas();
+    this.eventsSubscription = this.events.subscribe(() => this.getPessoas());
+  }
+
+  ngOnDestroy() {
+    this.eventsSubscription.unsubscribe();
   }
 
   onDelete(pessoa: Pessoa) {

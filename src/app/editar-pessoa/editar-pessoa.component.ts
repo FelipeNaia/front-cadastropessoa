@@ -29,7 +29,6 @@ export class EditarPessoaComponent implements OnInit {
 
   addContato(e : Event) {
     e.preventDefault();
-
     this.contatos.push(<Contato> ({
       nome: '',
       telefone: '',
